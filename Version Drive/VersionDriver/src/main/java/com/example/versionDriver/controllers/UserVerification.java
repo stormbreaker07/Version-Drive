@@ -5,7 +5,7 @@ import com.example.versionDriver.entities.UserEntity;
 import com.example.versionDriver.models.ResetPasswordModel;
 import com.example.versionDriver.models.SignInUserObject;
 import com.example.versionDriver.models.User;
-import com.example.versionDriver.services.ResetPassword;
+import com.example.versionDriver.services.ResetPasswordService;
 import com.example.versionDriver.services.UserVerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class UserVerification {
     @Autowired
     private UserVerificationService userRegister;
     @Autowired
-    private ResetPassword resetPassword;
+    private ResetPasswordService resetPassword;
 
     // user login "/login"
     //user register "/register"
@@ -39,7 +39,7 @@ public class UserVerification {
         return userRegister.verifyUser(signInDataObject);
     }
 
-    @PostMapping("/reset_password")
+    @PostMapping("/reset-password")
     public String updatePassword(@RequestBody ResetPasswordModel resetPasswordModel) {
         return resetPassword.resetPassword(resetPasswordModel);
 

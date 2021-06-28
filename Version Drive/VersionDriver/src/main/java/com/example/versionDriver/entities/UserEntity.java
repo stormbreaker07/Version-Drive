@@ -2,10 +2,12 @@ package com.example.versionDriver.entities;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user_accounts")
-public class UserEntity {
+public class UserEntity<List> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +22,9 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+//    @OneToMany(mappedBy = "user_accounts" ,fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id")
+//    private ArrayList<UploadedFile> filesUploaded = new ArrayList<UploadedFile>();
 
 
     public UserEntity(String firstName, String lastName, String email, String password) {
@@ -28,6 +33,8 @@ public class UserEntity {
         this.email = email;
         this.password = password;
     }
+
+
 
     public UserEntity() {
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class ResetPassword {
+public class ResetPasswordService {
 
     @Autowired
     private RegisterUser usersInfoRepository;
