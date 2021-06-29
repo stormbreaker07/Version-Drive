@@ -1,9 +1,9 @@
 package com.example.versionDriver.entities;
 
-
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "user_accounts")
@@ -22,10 +22,8 @@ public class UserEntity<List> {
     @Column(name = "password")
     private String password;
 
-//    @OneToMany(mappedBy = "user_accounts" ,fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
-//    private ArrayList<UploadedFile> filesUploaded = new ArrayList<UploadedFile>();
-
+    @OneToMany(mappedBy = "file_owner" , cascade = CascadeType.ALL)
+    private java.util.List<UploadedFile> uploadedFileList;
 
     public UserEntity(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -34,7 +32,21 @@ public class UserEntity<List> {
         this.password = password;
     }
 
+    public void add(UploadedFile newUploadFile) {
+        if(uploadedFileList == null) {
+            uploadedFileList = new ArrayList<>();
+        }
+        uploadedFileList.add(newUploadFile);
+        newUploadFile.setFile_owner(this);
+    }
 
+    public java.util.List<UploadedFile> getUploadedFileList() {
+        return uploadedFileList;
+    }
+
+    public void setUploadedFileList(java.util.List<UploadedFile> uploadedFileList) {
+        this.uploadedFileList = uploadedFileList;
+    }
 
     public UserEntity() {
 

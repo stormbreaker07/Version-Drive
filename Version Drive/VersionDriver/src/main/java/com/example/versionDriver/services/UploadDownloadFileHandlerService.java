@@ -1,8 +1,5 @@
 package com.example.versionDriver.services;
 
-
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,20 +36,16 @@ public class UploadDownloadFileHandlerService {
         return isFileUploaded;
     }
 
-    public InputStream downloadFile(String fileName){
+    public InputStream loadFile(String fileName){
         InputStream resource = null;
         try {
             File initialFile = new File("src/main/resources/static/uploads/" + fileName);
             resource = new FileInputStream(initialFile);
-
-//
-
         }catch(Exception e) {
-
             e.printStackTrace();
-
         }
         return resource;
     }
+
 
 }

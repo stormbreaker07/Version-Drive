@@ -3,7 +3,7 @@ package com.example.versionDriver.controllers;
 
 import com.example.versionDriver.services.UploadDownloadFileHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +45,7 @@ public class FileUploadDownloadController {
     public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) {
 
         try {
-            InputStream resourceFile = uploadFileHandlerService.downloadFile(fileName);
+            InputStream resourceFile = uploadFileHandlerService.loadFile(fileName);
             byte[] byteStream = resourceFile.readAllBytes();
             return ResponseEntity.ok()
                     .contentLength(byteStream.length)
@@ -53,8 +53,33 @@ public class FileUploadDownloadController {
                     .body(byteStream);
         }
         catch(Exception e) {
-            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
+
+    @GetMapping("/load/{fileName}")
+    public ResponseEntity<byte[]> loadFile(@PathVariable String fileName) {
+
+        try {
+            InputStream inputStream = uploadFileHandlerService.loadFile(fileName);
+            byte[] byteStream = inputStream.readAllBytes();
+            return ResponseEntity.ok()
+                    .contentLength(byteStream.length)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
+                    .body(byteStream);
+
+        }catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
