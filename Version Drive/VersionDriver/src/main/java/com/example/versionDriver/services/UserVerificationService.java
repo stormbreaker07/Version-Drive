@@ -64,4 +64,14 @@ public class UserVerificationService {
         return message;
     }
 
+
+    public Boolean verifyUserById(String user_id) {
+        Boolean result = false;
+        Optional<UserEntity> user = registerUser.findById(Long.parseLong(user_id));
+
+        if(user.isPresent()) {
+            result = true;
+        }
+        return result;
+    }
 }
