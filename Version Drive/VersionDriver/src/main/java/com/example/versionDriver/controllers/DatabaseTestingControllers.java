@@ -4,7 +4,7 @@ package com.example.versionDriver.controllers;
 import com.example.versionDriver.entities.UploadedFile;
 import com.example.versionDriver.entities.UserEntity;
 import com.example.versionDriver.repositories.RegisterUser;
-import com.example.versionDriver.repositories.UploadedFilerepository;
+import com.example.versionDriver.repositories.UploadedFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +20,7 @@ public class DatabaseTestingControllers {
     @Autowired
     private RegisterUser registerUser;
     @Autowired
-    private UploadedFilerepository uploadFiles;
+    private UploadedFileRepository uploadFiles;
 
 
     @GetMapping("/addData")

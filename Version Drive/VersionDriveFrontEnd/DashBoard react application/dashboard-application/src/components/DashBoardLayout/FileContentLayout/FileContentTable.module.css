@@ -1,0 +1,28 @@
+.tableContainer {
+    overflow-y: auto;
+    height:450px;
+    width:100%;
+}
+
+.thead {
+    height: 35px;
+    color: black;
+    background-color: #f9f9f9;    
+    position:sticky;
+    top:0;
+   
+ 
+}
+
+.table {
+    width: 100%;
+   }
+
+.tr th{
+    color: blue;
+    
+}
+  
+.tbody tr td {
+    background-color:transparent;
+}

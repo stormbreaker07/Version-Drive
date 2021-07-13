@@ -1,6 +1,7 @@
 package com.example.versionDriver.services;
 
 import com.example.versionDriver.entities.UserEntity;
+import com.example.versionDriver.exceptions.GenericException;
 import com.example.versionDriver.models.SignInUserObject;
 import com.example.versionDriver.repositories.RegisterUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,35 +34,29 @@ public class UserVerificationService {
         }
 
         if(userFound) {
-            throw new Exception("user already exist in database");
+            throw new GenericException("user already exist in database");
         }
 
     }
 
-    public String verifyUser(SignInUserObject signInUserData) {
+    public UserEntity verifyUser(SignInUserObject signInUserData) throws GenericException {
         Boolean userFound = false;
         String message = "";
         Optional<UserEntity> user = registerUser.findUserByEmail(signInUserData.getEmail());
         if(user.isPresent()) {
+            userFound = true;
             user = registerUser.findUserByEmailAndPassword(signInUserData.getEmail() , signInUserData.getPassword());
             if(user.isPresent()) {
-                message = "operation is a success user verified";
+                return user.get();
             }
             else {
-                message = "incorrect password";
+                throw new GenericException("incorrect password");
             }
-            userFound = true;
+
         }
         else {
-            message = "no user with this email id is register till now";
+            throw new GenericException("no user with this email id is register till now");
         }
-
-        if(userFound == false) {
-            message = "user is not registered yet";
-
-        }
-
-        return message;
     }
 
 

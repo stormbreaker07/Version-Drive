@@ -3,7 +3,7 @@ package com.example.versionDriver.services;
 import com.example.versionDriver.entities.UploadedFile;
 import com.example.versionDriver.entities.UserEntity;
 import com.example.versionDriver.repositories.RegisterUser;
-import com.example.versionDriver.repositories.UploadedFilerepository;
+import com.example.versionDriver.repositories.UploadedFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class UploadedFileService {
     @Autowired
     private RegisterUser userDatabase;
     @Autowired
-    private UploadedFilerepository uploadedFilerepository;
+    private UploadedFileRepository uploadedFilerepository;
 
 
     /***

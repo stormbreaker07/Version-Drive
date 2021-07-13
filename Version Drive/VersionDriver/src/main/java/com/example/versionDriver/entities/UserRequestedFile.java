@@ -12,7 +12,7 @@ public class UserRequestedFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    @Getter @Setter private Long id;
 
     @Column(name = "owner_id")
     @Getter @Setter private Long ownerId;
@@ -34,5 +34,17 @@ public class UserRequestedFile {
         this.userId = userId;
         this.fileId = fileId;
         this.purpose = purpose;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserRequestedFile{" +
+                "id=" + id +
+                ", ownerId=" + ownerId +
+                ", userId=" + userId +
+                ", fileId=" + fileId +
+                ", purpose='" + purpose + '\'' +
+                '}';
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
+
 @ControllerAdvice
 public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
 
@@ -16,5 +18,12 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
         ExceptionBodyModel exceptionBody  = new ExceptionBodyModel(HttpStatus.BAD_REQUEST , ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionBody);
     }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ExceptionBodyModel> handleIOException(IOException ex) {
+        ExceptionBodyModel exceptionBody = new ExceptionBodyModel(HttpStatus.INTERNAL_SERVER_ERROR , ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionBody);
+    }
+
 
 }
