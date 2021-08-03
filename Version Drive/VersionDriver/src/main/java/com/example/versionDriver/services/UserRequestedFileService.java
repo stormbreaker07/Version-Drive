@@ -72,4 +72,8 @@ public class UserRequestedFileService {
     }
 
 
+    public UserRequestedFile getFileBYFileId(Long userId) {
+        UserRequestedFile file = userRequestedFileRepository.findByFileID(userId);
+        return file;
+    }
 }

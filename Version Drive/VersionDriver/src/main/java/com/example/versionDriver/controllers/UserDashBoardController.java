@@ -3,19 +3,19 @@ package com.example.versionDriver.controllers;
 
 import com.example.versionDriver.entities.UserRequestedFile;
 import com.example.versionDriver.exceptions.GenericException;
+import com.example.versionDriver.models.SharedFilesResponseModel;
 import com.example.versionDriver.models.UploadedFileResponseBodyModel;
 import com.example.versionDriver.services.DeleteFileService;
 import com.example.versionDriver.services.UserDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("dashboard")
 public class UserDashBoardController {
@@ -36,23 +36,24 @@ public class UserDashBoardController {
 
 
     @GetMapping("{user_id}/shared-files")
-    public ResponseEntity<List<UserRequestedFile>> sharedFiles(@PathVariable String user_id) {
+    public ResponseEntity<List<SharedFilesResponseModel>> sharedFiles(@PathVariable String user_id) {
         return ResponseEntity.ok().body(userDashboardService.getAllSharedFile(user_id));
     }
 
 
     @GetMapping("{user_id}/requested-files")
-    public ResponseEntity<List<UserRequestedFile>> requestedFiles(@PathVariable String user_id) {
+    public ResponseEntity<List<SharedFilesResponseModel>> requestedFiles(@PathVariable String user_id) {
         return ResponseEntity.ok().body(userDashboardService.getAllRequestedFile(user_id));
     }
 
 
     @GetMapping("{user_id}/delete-file/{file_id}")
-    public void deleteRequestedFile(@PathVariable String user_id , @PathVariable String file_id) throws IOException {
+    public ResponseEntity<String> deleteRequestedFile(@PathVariable String user_id , @PathVariable String file_id) {
         try {
             deleteFileService.deleteSingleFile(file_id, user_id);
+            return ResponseEntity.ok().body("file deleted , action successful");
         }catch(Exception e) {
-            throw new IOException("caused of exception {file may not be exist} , {Restfull api may face internal server error} ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("file may not be exist");
         }
     }
 

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/files")
 public class FileUploadDownloadController {

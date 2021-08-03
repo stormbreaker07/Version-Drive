@@ -21,4 +21,7 @@ public interface UserRequestedFileRepository extends JpaRepository<UserRequested
 
     @Query("DELETE FROM UserRequestedFile W WHERE W.fileId = ?1")
     void deleteFilesByFileId(Long fileId);
+
+    @Query("SELECT W FROM UserRequestedFile W WHERE W.fileId = ?1")
+    UserRequestedFile findByFileID(Long fileId);
 }

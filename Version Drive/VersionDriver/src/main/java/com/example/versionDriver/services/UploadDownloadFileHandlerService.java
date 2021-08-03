@@ -51,8 +51,9 @@ public class UploadDownloadFileHandlerService {
         Long ver = Long.parseLong(version);
         ver++;
 
-        String path = "/home/FoolMonkey/Study/Version Drive BacKend/Version-Drive/Version Drive/VersionDriver/src/main/resources/static/uploads"
+        String path = "/home/FoolMonkey007/Study/Version Drive Backend/Version Drive/VersionDriver/src/main/resources/static/uploads"
                 + File.separator + String.valueOf(ver) + "-" + file.getOriginalFilename();
+        System.out.println(file.getContentType());
         try {
             Path uploadPath = Paths.get(path);
             Files.copy(file.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
