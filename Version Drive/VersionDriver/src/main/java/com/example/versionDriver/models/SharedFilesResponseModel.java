@@ -8,14 +8,16 @@ import lombok.Setter;
 public class SharedFilesResponseModel {
 
     @Getter @Setter private Long ownerId;
-    @Getter @Setter private Long userId;
+    @Getter @Setter private String userEmail;
     @Getter @Setter private Long id;
+    @Getter @Setter private String purpose;
     @Getter @Setter private UploadedFileResponseBodyModel fileInfo;
 
-    public SharedFilesResponseModel(Long id , Long ownerId , Long userId , UploadedFile file) {
+    public SharedFilesResponseModel(Long id , Long ownerId , String userEmail ,String purpose, UploadedFile file) {
         this.ownerId = ownerId;
         this.id = id;
-        this.userId = userId;
+        this.purpose = purpose;
+        this.userEmail = userEmail;
         UploadedFileResponseBodyModel fileInfo = new UploadedFileResponseBodyModel(file.getFileId(),file.getFileName(),file.getFileVersion(),file.getTimestamp());
         this.fileInfo = fileInfo;
     }

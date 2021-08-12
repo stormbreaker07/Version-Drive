@@ -5,6 +5,7 @@ import com.example.versionDriver.entities.UserRequestedFile;
 import com.example.versionDriver.exceptions.GenericException;
 import com.example.versionDriver.repositories.UploadedFileRepository;
 import com.example.versionDriver.repositories.UserRequestedFileRepository;
+import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -95,7 +97,12 @@ public class DeleteFileService {
      */
     public void deleteFileFromDataBase(String fileId) {
         uploadedFiles.deleteById(Long.parseLong(fileId));
-        userRequestedFileRepository.deleteFilesByFileId(Long.parseLong(fileId));
+        List<UserRequestedFile> files = userRequestedFileRepository.findByFileID(Long.parseLong(fileId));
+        for(UserRequestedFile x : files ) {
+            System.out.println("so its working");
+            userRequestedFileRepository.delete(x);
+        }
+        //userRequestedFileRepository.deleteFilesByFileId(Long.parseLong(fileId));
     }
 
 

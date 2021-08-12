@@ -41,17 +41,17 @@ public class UserDashBoardController {
     }
 
 
-    @GetMapping("{user_id}/requested-files")
-    public ResponseEntity<List<SharedFilesResponseModel>> requestedFiles(@PathVariable String user_id) {
-        return ResponseEntity.ok().body(userDashboardService.getAllRequestedFile(user_id));
-    }
+//    @GetMapping("{user_id}/requested-files")
+//    public ResponseEntity<List<SharedFilesResponseModel>> requestedFiles(@PathVariable String user_id) {
+//        return ResponseEntity.ok().body(userDashboardService.getAllRequestedFile(user_id));
+//    }
 
 
     @GetMapping("{user_id}/delete-file/{file_id}")
     public ResponseEntity<String> deleteRequestedFile(@PathVariable String user_id , @PathVariable String file_id) {
         try {
             deleteFileService.deleteSingleFile(file_id, user_id);
-            return ResponseEntity.ok().body("file deleted , action successful");
+            return ResponseEntity.ok().body("SUCCESS");
         }catch(Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("file may not be exist");
         }

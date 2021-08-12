@@ -46,12 +46,12 @@ public class UploadDownloadFileHandlerService {
 
         Boolean result = userVerificationService.verifyUserById(owner_id);
         if (result == false) {
-            throw new GenericException("user id is wrong please send a currect user id ");
+            throw new GenericException("user id is wrong please send a correct user id ");
         }
         Long ver = Long.parseLong(version);
         ver++;
 
-        String path = "/home/FoolMonkey007/Study/Version Drive Backend/Version Drive/VersionDriver/src/main/resources/static/uploads"
+        String path = "src/main/resources/static/uploads"
                 + File.separator + String.valueOf(ver) + "-" + file.getOriginalFilename();
         System.out.println(file.getContentType());
         try {
@@ -79,7 +79,7 @@ public class UploadDownloadFileHandlerService {
      * @return
      * @throws GenericException
      */
-    public InputStream loadFile(String file_id , String owner_id, String user_id,String purpose) throws GenericException{
+    public InputStream loadFile(String file_id , String owner_id, String user_id,String purpose) {
          UploadedFile existingFile = uploadedFiles.getFileById(file_id);
         if(existingFile!=null) {
             System.out.println(existingFile.getFile_owner().getId() + owner_id);
@@ -93,7 +93,6 @@ public class UploadDownloadFileHandlerService {
                 File initialFile = new File("src/main/resources/static/uploads/"
                         + existingFile.getFileVersion() + "-" + existingFile.getFileName());
                 resource = new FileInputStream(initialFile);
-                userRequestedFileService.addUser(user_id , file_id ,owner_id, purpose);
                 return resource;
             } catch (Exception e) {
                 throw new GenericException("sorry not able to load file now , try again later");
