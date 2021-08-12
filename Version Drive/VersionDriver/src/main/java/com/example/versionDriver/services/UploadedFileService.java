@@ -38,8 +38,8 @@ public class UploadedFileService {
         return String.valueOf(version);
     }
 
-    public UploadedFile getFileById(String file_id) {
-        Optional<UploadedFile> file = Optional.of(uploadedFilerepository.getById(Long.parseLong(file_id)));
+    public UploadedFile getFileById(String fileId) {
+        Optional<UploadedFile> file = Optional.of(uploadedFilerepository.getById(Long.parseLong(fileId)));
         if (file.isPresent()) {
             UploadedFile existingFile = file.get();
             return existingFile;
@@ -48,6 +48,14 @@ public class UploadedFileService {
 
     }
 
+    public String getFileNameById(String fileId) {
+        Optional<UploadedFile> file = Optional.of(uploadedFilerepository.getById(Long.parseLong(fileId)));
+        if (file.isPresent()) {
+            UploadedFile existingFile = file.get();
+            return existingFile.getFileName();
+        }
+        return null;
+    }
 
 
 }

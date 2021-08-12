@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface UserRequestedFileRepository extends JpaRepository<UserRequestedFile , Long> {
 
-    @Query("SELECT W FROM UserRequestedFile W WHERE W.ownerId = ?1")
-    Optional<List<UserRequestedFile>> findFilesByownerId(Long ownerId);
+    @Query("SELECT W FROM UserRequestedFile W WHERE W.ownerId = ?1 OR W.userId = ?2")
+    Optional<List<UserRequestedFile>> findFilesByownerId(Long ownerId, Long userId);
 
     @Query("SELECT W FROM UserRequestedFile W WHERE W.userId = ?1")
     List<UserRequestedFile> findFilesByUserId(Long userId);
@@ -23,5 +23,5 @@ public interface UserRequestedFileRepository extends JpaRepository<UserRequested
     void deleteFilesByFileId(Long fileId);
 
     @Query("SELECT W FROM UserRequestedFile W WHERE W.fileId = ?1")
-    UserRequestedFile findByFileID(Long fileId);
+    List<UserRequestedFile> findByFileID(Long fileId);
 }

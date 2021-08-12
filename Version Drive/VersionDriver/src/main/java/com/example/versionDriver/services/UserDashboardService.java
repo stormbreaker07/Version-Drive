@@ -8,8 +8,6 @@ import com.example.versionDriver.models.UploadedFileResponseBodyModel;
 import com.example.versionDriver.repositories.RegisterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +25,8 @@ public class UserDashboardService {
     private UserRequestedFileService userRequestedFileService;
     @Autowired
     private UploadedFileService uploadedFileService;
+    @Autowired
+    private UserVerificationService userVerificationService;
 
     /***
      * getALlUploadedFiles method return all the files data uploaded by the user
@@ -64,30 +64,31 @@ public class UserDashboardService {
 
         for(UserRequestedFile x : tempData) {
             UploadedFile tempFile = uploadedFileService.getFileById(String.valueOf(x.getFileId()));
-            sharedFiles.add(new SharedFilesResponseModel(x.getId() , x.getOwnerId() , x.getUserId() , tempFile));
+            String recieverEmailId = userVerificationService.getEmailIdByUserId(x.getUserId());
+            sharedFiles.add(new SharedFilesResponseModel(x.getId() , x.getOwnerId() , recieverEmailId ,x.getPurpose(), tempFile));
         }
 
         return sharedFiles;
     }
 
-    /***
-     * getAllSharedFile return all the file requested by user to get some particular purppos
-     * from some other user.
-     * UserRequestedFile is an entity so we send data in entity format
-     * @param userId user requested to get the files data he/she get access from other user
-     * @return list of UserRequestedFile that he/she get access of.
-     */
-    public List<SharedFilesResponseModel> getAllRequestedFile(String userId) {
-        List<UserRequestedFile> tempData = userRequestedFileService.getAllRequestedFile(userId);
-        List<SharedFilesResponseModel> requestedFiles = new ArrayList<>();
-
-        for(UserRequestedFile x : tempData) {
-            UploadedFile tempFile = uploadedFileService.getFileById(String.valueOf(x.getFileId()));
-            requestedFiles.add(new SharedFilesResponseModel(x.getId() , x.getOwnerId() , x.getUserId() , tempFile));
-        }
-
-        return requestedFiles;
-    }
+//    /***
+//     * getAllSharedFile return all the file requested by user to get some particular purppos
+//     * from some other user.
+//     * UserRequestedFile is an entity so we send data in entity format
+//     * @param userId user requested to get the files data he/she get access from other user
+//     * @return list of UserRequestedFile that he/she get access of.
+//     */
+//    public List<SharedFilesResponseModel> getAllRequestedFile(String userId) {
+//        List<UserRequestedFile> tempData = userRequestedFileService.getAllRequestedFile(userId);
+//        List<SharedFilesResponseModel> requestedFiles = new ArrayList<>();
+//
+//        for(UserRequestedFile x : tempData) {
+//            UploadedFile tempFile = uploadedFileService.getFileById(String.valueOf(x.getFileId()));
+//            requestedFiles.add(new SharedFilesResponseModel(x.getId() , x.getOwnerId() , x.getUserId() , tempFile));
+//        }
+//
+//        return requestedFiles;
+//    }
 
 
     /***
